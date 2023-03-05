@@ -13,9 +13,10 @@ public class PersonDataDto {
 
     private String name;
     private String age;
-    private LocalDate deateOfBirth;
+    private LocalDate dateOfBirth;
     private String fatherName;
     private String motherName;
     private String address;
+    private String imageName;
 
 }

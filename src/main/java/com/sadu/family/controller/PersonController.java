@@ -4,11 +4,10 @@ import com.sadu.family.dto.PersonDataDto;
 import com.sadu.family.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @Slf4j
@@ -18,18 +17,34 @@ public class PersonController {
     PersonService personService;
 
     @GetMapping("/")
-    public String msg(){
-        log.info("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7777");
+    public ModelAndView msg(){
         log.info("msg method is called");
-        return "Welcome to app";
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("home");
+        return mav;
     }
 
-    @GetMapping("/get-data/{name}")
-    public ResponseEntity<PersonDataDto> getPersonByName(@PathVariable("name") String name) {
+//    @GetMapping("/img")
+//    public ModelAndView img(){
+//        log.info("msg method is called");
+//        ModelAndView mav = new ModelAndView();
+//        mav.setViewName("personData");
+//        PersonDataDto responseData = personService.getPersonByName("sadvik");
+//        mav.addObject("person",responseData);
+//        mav.addObject("imgName",responseData.getImageName());
+//        return mav;
+//    }
+
+    @GetMapping("/get-data")
+    public ModelAndView getPersonByName(@RequestParam("searchValue") String name) {
         log.info("getPersonByName method is called");
 
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("personData");
         PersonDataDto responseData = personService.getPersonByName(name);
-        return new ResponseEntity<>(responseData, HttpStatus.OK);
+        mav.addObject("person",responseData);
+        mav.addObject("imgName",responseData.getImageName());
+        return mav;
 
     }
 }

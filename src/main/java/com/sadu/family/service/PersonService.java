@@ -14,8 +14,10 @@ import java.util.Optional;
 @Service
 public class PersonService {
 
+    @Autowired
+    private PersonDataRepo personDataRepo;
     public PersonDataDto getPersonByName(String name){
-        Map<String, PersonDataDto> personDetails = PersonDataRepo.personDetails;
+        Map<String, PersonDataDto> personDetails = personDataRepo.getPersonDetails();
         return Optional
                 .ofNullable(personDetails.get(name.toUpperCase()))
                 .orElseThrow(()->new InvalidNameException("Name :".concat(name).concat(" Not Found")));
